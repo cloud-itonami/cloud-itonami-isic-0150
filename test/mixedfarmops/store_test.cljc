@@ -1,0 +1,44 @@
+(ns mixedfarmops.store-test
+  (:require [clojure.test :refer [deftest is testing]]
+            [mixedfarmops.store :as store]))
+
+(deftest mem-store-creation
+  (testing "Create empty store"
+    (let [st (store/mem-store)]
+      (is (some? st))
+      (is (satisfies? store/Store st))))
+
+  (testing "Create store with initial farms"
+    (let [farms {"farm-001" {:id "farm-001" :name "Test Mixed Farm"}}
+          st (store/mem-store {:initial-farms farms})]
+      (is (some? st))
+      (is (satisfies? store/Store st)))))
+
+(deftest registered-farm-retrieval
+  (testing "Retrieve existing farm"
+    (let [farm {:id "farm-001" :name "Test Mixed Farm"}
+          st (store/mem-store {:initial-farms {"farm-001" farm}})]
+      (is (= farm (store/registered-farm st "farm-001")))))
+
+  (testing "Retrieve non-existent farm"
+    (let [st (store/mem-store)]
+      (is (nil? (store/registered-farm st "no-such-farm")))))
+
+  (testing "nil farm-id returns nil (never falls through to a default)"
+    (let [st (store/mem-store {:initial-farms {"farm-001" {:id "farm-001"}}})]
+      (is (nil? (store/registered-farm st nil))))))
+
+(deftest add-farm-test
+  (testing "Register a new farm"
+    (let [st (store/mem-store)
+          farm-data {:id "farm-002" :name "New Mixed Farm"}
+          result (store/add-farm st "farm-002" farm-data)]
+      (is (= farm-data result))
+      (is (= farm-data (store/registered-farm st "farm-002")))))
+
+  (testing "Update an existing farm"
+    (let [st (store/mem-store {:initial-farms {"farm-001" {:id "farm-001"}}})
+          updated {:id "farm-001" :name "Renamed Mixed Farm"}
+          result (store/add-farm st "farm-001" updated)]
+      (is (= updated result))
+      (is (= updated (store/registered-farm st "farm-001"))))))

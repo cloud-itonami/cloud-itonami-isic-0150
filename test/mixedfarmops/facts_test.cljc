@@ -1,0 +1,47 @@
+(ns mixedfarmops.facts-test
+  (:require [clojure.test :refer [deftest is are testing]]
+            [mixedfarmops.facts :as facts]))
+
+(deftest supply-category-lookup
+  (testing "Lookup valid supply category"
+    (let [c (facts/supply-category-by-id "seed")]
+      (is (= "seed" (:id c)))
+      (is (= "種子" (:name c)))))
+
+  (testing "Lookup invalid supply category"
+    (is (nil? (facts/supply-category-by-id "unknown")))))
+
+(deftest supply-category-cost-thresholds
+  (testing "Category-specific cost thresholds span crop AND livestock inputs"
+    (are [id expected] (= expected (:cost-threshold (facts/supply-category-by-id id)))
+      "seed"               500
+      "fertilizer"         500
+      "feed"               500
+      "veterinary-supply"  500
+      "equipment"          1000)))
+
+(deftest default-cost-threshold-value
+  (testing "Default fallback threshold matches the conservative baseline"
+    (is (= 500 facts/default-cost-threshold))))
+
+(deftest crop-lookup
+  (testing "Lookup valid crop"
+    (are [id expected-name] (= expected-name (:name (facts/crop-by-id id)))
+      "wheat"       "小麦"
+      "maize"       "とうもろこし"
+      "vegetables"  "野菜"
+      "fodder-crop" "飼料作物"))
+
+  (testing "Lookup invalid crop"
+    (is (nil? (facts/crop-by-id "unknown")))))
+
+(deftest species-lookup
+  (testing "Lookup valid species"
+    (are [id expected-name] (= expected-name (:name (facts/species-by-id id)))
+      "cattle"     "牛"
+      "swine"      "豚"
+      "poultry"    "家禽"
+      "sheep-goat" "羊・ヤギ"))
+
+  (testing "Lookup invalid species"
+    (is (nil? (facts/species-by-id "unknown")))))
