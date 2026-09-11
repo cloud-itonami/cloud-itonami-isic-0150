@@ -75,7 +75,7 @@
   scenarios are an ordered vector and every fold over a set/map sorts
   first. Two runs are byte-identical.
 
-  Usage: `clojure -M:dev:render-html [out-file]`
+  Usage: `kbb -M:dev:render-html [out-file]`
   (default `docs/samples/operator-console.html`)."
   (:require [clojure.java.io :as io]
             [kotoba.lang.text :as str]
@@ -1060,7 +1060,7 @@
      "<main>\n"
      "  <section class=\"card\">\n"
      "    <h2>このページについて</h2>\n"
-     "    <p>このコンソールは <code>clojure -M:dev:render-html</code> がビルド時に生成する。"
+     "    <p>このコンソールは <code>kbb -M:dev:render-html</code> がビルド時に生成する。"
      "本文の数値・id・判定理由はすべて実アクター "
      "(<code>mixedfarmops.operation</code> → <code>mixedfarmops.advisor</code> → 独立した "
      "<code>mixedfarmops.governor</code> → <code>mixedfarmops.phase</code>) を実際に走らせた戻り値であり、"

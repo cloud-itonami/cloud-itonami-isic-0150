@@ -17,7 +17,7 @@ and maintains full transparency over decisions.
 `MixedFarmingOperationsGovernor` (`mixedfarmops.governor`), composed by
 `mixedfarmops.operation` following the itonami actor pattern
 (ADR-2607011000): `advise -> govern -> phase-gate -> commit | escalate |
-hold`. 39 tests / 120 assertions green (`clojure -M:test`).
+hold`. 39 tests / 120 assertions green (`kbb -M:test`).
 
 `mixedfarmops.operation` is a synchronous stub of this flow (see its
 docstring) -- production wiring into a `langgraph-clj` StateGraph with
@@ -139,7 +139,7 @@ a single actor spanning both domains:
 - `mixedfarmops.phase` — 0→3 rollout phase gate
 - `mixedfarmops.operation` — composes advisor → governor → phase into one
   operation run
-- `mixedfarmops.sim` — demo runner (`clojure -M:run`)
+- `mixedfarmops.sim` — demo runner (`kbb -M:run`)
 
 ## Capability layer
 
@@ -157,9 +157,9 @@ See [`docs/business-model.md`](docs/business-model.md) and
 ## Testing
 
 ```bash
-clojure -M:test   # 39 tests / 120 assertions
-clojure -M:lint   # clj-kondo, 0 errors / 0 warnings
-clojure -M:run    # demo runner
+kbb -M:test   # 39 tests / 120 assertions
+kbb -M:lint   # clj-kondo, 0 errors / 0 warnings
+kbb -M:run    # demo runner
 ```
 
 ## License
