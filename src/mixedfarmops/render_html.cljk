@@ -45,7 +45,7 @@
                           `mixedfarmops.sim/demo` (verbatim, including its
                           `:crops [\"wheat\"] :species [\"cattle\"]`);
                           `farm-002`/\"New Mixed Farm\" from
-                          `test/mixedfarmops/store_test.cljc`
+                          `test/mixedfarmops/store_test.cljk`
     - crop ids            `wheat`/`maize`/`vegetables` from
                           `mixedfarmops.facts/crops`
     - species ids         `cattle`/`swine`/`poultry` from
@@ -54,7 +54,7 @@
                           thresholds from
                           `mixedfarmops.facts/supply-categories`
     - costs               100 / 500 / 800 / 1000 / 1200 -- from
-                          `test/mixedfarmops/governor_test.cljc` or the
+                          `test/mixedfarmops/governor_test.cljk` or the
                           thresholds themselves (500 is the exact
                           boundary; `registry/cost-exceeds-threshold?`
                           is exclusive there, so it does NOT escalate)
@@ -1075,7 +1075,7 @@
      "</main>\n"
      "<footer>\n"
      "  <p class=\"muted\">cloud-itonami-isic-0150 · AGPL-3.0-or-later · "
-     "生成元: <code>src/mixedfarmops/render_html.clj</code></p>\n"
+     "生成元: <code>src/mixedfarmops/render_html.cljk</code></p>\n"
      "</footer>\n"
      "</body></html>\n")))
 
