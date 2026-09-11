@@ -2469,7 +2469,7 @@ img,svg { max-width: 100%; height: auto; }</style></head><body>
 <main>
   <section class="card">
     <h2>このページについて</h2>
-    <p>このコンソールは <code>clojure -M:dev:render-html</code> がビルド時に生成する。本文の数値・id・判定理由はすべて実アクター (<code>mixedfarmops.operation</code> → <code>mixedfarmops.advisor</code> → 独立した <code>mixedfarmops.governor</code> → <code>mixedfarmops.phase</code>) を実際に走らせた戻り値であり、手書きのサンプルは含まない。タイムスタンプ・乱数を含まないため再生成はバイト単位で同一になる。</p>
+    <p>このコンソールは <code>kbb -M:dev:render-html</code> がビルド時に生成する。本文の数値・id・判定理由はすべて実アクター (<code>mixedfarmops.operation</code> → <code>mixedfarmops.advisor</code> → 独立した <code>mixedfarmops.governor</code> → <code>mixedfarmops.phase</code>) を実際に走らせた戻り値であり、手書きのサンプルは含まない。タイムスタンプ・乱数を含まないため再生成はバイト単位で同一になる。</p>
     <p class="muted">この actor は back-office の調整専用である。圃場・家畜取扱設備の直接操作、農薬散布判断の確定、と畜/淘汰の判断は農家・アグロノミスト・獣医の専権事項であり、Governor が構造的に排除する — advisor の確信度では覆せない。ISIC 0150 は作物栽培と家畜飼養のどちらも標準粗収益の 66% に達しない経営体を指すため、この actor は両方の側を 1 つの経営体として扱う。</p>
   </section>
   <section class="card">
