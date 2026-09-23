@@ -1,5 +1,5 @@
 (ns mixedfarmops.phase-test
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [mixedfarmops.phase :as phase]))
 
 (deftest verdict-to-disposition

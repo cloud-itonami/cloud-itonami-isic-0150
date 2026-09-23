@@ -1,5 +1,5 @@
 (ns mixedfarmops.facts-test
-  (:require [clojure.test :refer [deftest is are testing]]
+  (:require [kotoba.test :refer [deftest is are testing]]
             [mixedfarmops.facts :as facts]))
 
 (deftest supply-category-lookup
