@@ -1,0 +1,42 @@
+;; What this vertical's robot physically does, declared for
+;; kotoba.robotics.process (kotoba-lang/robotics). `kbb -M:dev:physics` runs it.
+;;
+;; README "Robotics premise": a farm-management robot keeps crop-field and
+;; herd records, schedules field operations and veterinary appointments and
+;; handles crop and livestock inputs for a mixed farm (ISIC 0150). Its physical
+;; work spans both sides: hauling harvested forage from the field to the
+;; livestock shed, draining the livestock water tank into the troughs, and
+;; pumping irrigation water to the crop field.
+;;
+;; Every number without a cited source is marked `estimate` in its :basis.
+;; Replacing an estimate with a sourced value is this bot's growth work.
+{:physics/schema "itonami.physical-ai.spec.v1"
+ :repo "cloud-itonami/cloud-itonami-isic-0150"
+ :cases
+ [{:id :forage-field-to-shed
+   :kind :transport
+   :procedure "farm carrier hauls harvested forage from the crop field along the farm track to the livestock shed"
+   :params {:mass-kg 350.0 :distance-m 400.0 :v-max-mps 2.0 :a-max-mps2 0.5
+            :brake-decel-mps2 1.0 :drive-force-n 1500.0 :crr 0.06
+            :cog-height-m 0.80 :support-half-length-m 0.65 :max-time-s 3600.0}
+   :sweep {:param :payload-kg :values [200.0 500.0 800.0 1100.0 1400.0]}
+   :quantity :cycle-time-s
+   :limit {:max 230.0 :basis "estimate: one haul leg so the shed's feeding round is not held up"}
+   :boundary {:lo 50.0 :hi 3000.0}}
+  {:id :livestock-water-tank-to-troughs
+   :kind :tank-drain
+   :procedure "the 2,000-litre header tank gravity-drains to refill the troughs after the morning round"
+   :params {:tank-area-m2 1.6 :h0-m 1.25 :h-target-m 0.05 :cd 0.62 :dt-s 0.5 :max-time-s 86400.0}
+   :sweep {:param :orifice-area-m2 :values [0.00049 0.00080 0.00126 0.00196 0.00314]}
+   :quantity :time-to-target-s
+   :limit {:max 1200.0 :basis "estimate: troughs refilled within 20 minutes of the round"}
+   :boundary {:lo 0.0002 :hi 0.01}}
+  {:id :crop-irrigation-line
+   :kind :pipe-flow
+   :procedure "pump drives irrigation water through the 350 m line to the crop field's sprinkler header"
+   :params {:diameter-m 0.075 :length-m 350.0 :roughness-m 1.5e-6
+            :density-kg-m3 998.0 :viscosity-pa-s 1.0e-3 :pump-efficiency 0.65 :elevation-m 4.0}
+   :sweep {:param :q-m3s :values [0.003 0.006 0.009 0.012 0.015]}
+   :quantity :pump-power-w
+   :limit {:max 4000.0 :basis "estimate: rated shaft power of a 4 kW farm irrigation pump"}
+   :boundary {:lo 0.001 :hi 0.03}}]}
